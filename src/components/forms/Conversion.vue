@@ -117,7 +117,7 @@
       
       async submit(){
         alert(this.conversion.name)
-        await axios.post('http://localhost:3333/conversion', this.conversion)
+        await axios.post('https://iea-api.herokuapp.com/conversion', this.conversion)
                 .then(() => {
 
                    alert('Usuário salvo com sucesso!')
