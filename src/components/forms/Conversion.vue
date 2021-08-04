@@ -116,12 +116,11 @@
         },
       
       async submit(){
-        alert(this.conversion.name)
         await axios.post('https://iea-api.herokuapp.com/conversion', this.conversion)
                 .then(() => {
-
-                   alert('Usuário salvo com sucesso!')
-                  this.limpaForm();               
+                  this.limpaForm();
+                  alert('Usuário salvo com sucesso!')
+                                 
                 }).catch(err => {
                     if(err.response.status === 403){
                         alert('Sua sessão expirou, por favor faça o login.')

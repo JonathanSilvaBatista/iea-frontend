@@ -31,6 +31,7 @@ Vue.use(Router);
 
 const routes = [
     { path: '/', name: 'login', component: Conversion },
+    { path: '/conversion', name: 'conversion', component: Conversion },
     { path: '/redirect-me', redirect: { name: 'login' } },
     // { path: '/home', name: Home, component: Home, 
     //     children: [
