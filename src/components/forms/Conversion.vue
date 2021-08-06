@@ -34,7 +34,7 @@
             <v-col cols="12" md="4">
               <v-select
                 v-model="conversion.experience"
-                :rules="experienceRules"
+                :rules="[rules.experience]"
                 :items="items"
                 label="Qual sua experiência com Jesus"
                 required
@@ -43,7 +43,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="conversion.name"
-                :rules="nameRules"
+                :rules="[rules.name]"
                 label="Nos conte seu nome"
                 required
               ></v-text-field>
@@ -59,7 +59,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="conversion.email"
-                :rules="emailRules"
+                :rules="[rules.email]"
                 label="Ou se preferir seu email"
               ></v-text-field>
             </v-col>
@@ -90,46 +90,34 @@
         experience:''
       },
 
-      experienceRules: [
-        //v => !!v || 'O campo experiência é obrigatório',
-      ],
-
-      nameRules: [
-        //v => !!v || 'O campo nome é obrigatório',
-      ],
-      
-      emailRules: [
-        // v => !!v || 'O campo email é obrigatório',
-        // v => /.+@.+/.test(v) || 'Email inválido',
-      ],
+      rules: {
+        experience: value => !!value || 'O campo experiência é obrigatório.',
+        name: v => !!v || 'O campo nome é obrigatório',
+        email: v => /.+@.+/.test(v) || 'Formato de e-mail incorreto.'
+      },
 
       items: ['Primeira vez que aceito Jesus', 'Estou me reconciliando'],
 
     }),
 
     methods:{
-      limpaForm () {
-          this.conversion.name = "";
-          this.conversion.email = "";
-          this.conversion.telephone = "";
-          this.conversion.experience = "";
-        },
-      
       async submit(){
-        await axios.post('https://iea-api.herokuapp.com/conversion', this.conversion)
-                .then(() => {
-                  this.limpaForm();
-                  alert('Usuário salvo com sucesso!')
-                                 
-                }).catch(err => {
-                    if(err.response.status === 403){
-                        alert('Sua sessão expirou, por favor faça o login.')
-                        this.$router.push('/redirect-me');
-                    } else {
-                        alert('Ocorreu um erro, por favor, contate o suporte.')
-                    }
-                   
-                })
+        if(this.conversion.experience != "" && this.conversion.name != ""){
+          await axios.post('https://iea-api.herokuapp.com/conversion', this.conversion)
+                  .then(() => {
+                    alert('Bem vindo(a) a Família de Cristo! Estaremos orando por você e em breve entraremos em contato!')
+                    this.$router.go()
+                  }).catch(err => {
+                      if(err.response.status === 403){
+                          alert('Sua sessão expirou.')
+                          this.$router.push('/redirect-me');
+                      } else {
+                          alert('Ocorreu um erro, por favor, contate o suporte.')
+                      }   
+                  })
+        }else{
+          alert('Os campos "Experiência com Jesus" e "Nome" são de preenchimento obrigatório!')
+        }
       }
     }
   }
