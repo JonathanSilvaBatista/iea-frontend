@@ -31,7 +31,7 @@
       <v-form v-model="valid">
         <v-container>
           <v-row>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="6">
               <v-select
                 v-model="conversion.experience"
                 :rules="[rules.experience]"
@@ -40,7 +40,7 @@
                 required
                ></v-select>
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="6">
               <v-text-field
                 v-model="conversion.name"
                 :rules="[rules.name]"
@@ -48,22 +48,34 @@
                 required
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4">
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6">
               <v-text-field
                 v-model="conversion.telephone"
                 label="Deixa seu telefone"
               ></v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="6">
               <v-text-field
                 v-model="conversion.email"
                 :rules="[rules.email]"
                 label="Ou se preferir seu email"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4">
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="12">
+              <v-textarea
+                name="opinion"
+                v-model="conversion.opinion"
+                label="Deixe seu comentário, sugestão ou pedido de oração"
+                value=""
+              ></v-textarea>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="12">
               <center><v-btn
                 color="success"
                 v-on:click="submit"
@@ -87,7 +99,8 @@
         name: '',
         email: '',
         telephone:'',
-        experience:''
+        experience:'',
+        opinion:''
       },
 
       rules: {
@@ -96,7 +109,7 @@
         email: v => /.+@.+/.test(v) || 'Formato de e-mail incorreto.'
       },
 
-      items: ['Primeira vez que aceito Jesus', 'Estou me reconciliando'],
+      items: ['Primeira vez que aceito Jesus', 'Estou me reconciliando', 'Já tenho Jesus em minha vida'],
 
     }),
 
